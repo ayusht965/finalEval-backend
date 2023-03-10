@@ -1,6 +1,6 @@
 const { addContent, getContents, getContent, addNewContentField, deleteContentField,
-  getContentEntries, addContentEntries, updateContentEntries, updateContentField } = require('../services');
-
+  getContentEntries, addContentEntries, updateContentEntries, updateContentField, updateContentName
+} = require('../services');
 const getContentsController = async (req, res) => {
   try {
     const contentTypes = await getContents();
@@ -24,7 +24,6 @@ const getContentController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
 const addContentController = async (req, res) => {
   try {
     const name = req.body.name;
@@ -35,7 +34,17 @@ const addContentController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
+const updateContentNameController = async (req, res) => {
+  try {
+    const { Id } = req.params;
+    const name = req.body.name;
+    const contentType = await updateContentName(Id, name);
+    res.status(200).json(contentType);
+  }
+  catch (error) {
+    res.status(500).json(error);
+  }
+};
 const addContentFieldController = async (req, res) => {
   try {
     const { newField } = req.body;
@@ -47,7 +56,6 @@ const addContentFieldController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
 const updateContentFieldController = async (req, res) => {
   try {
     const { Id } = req.params;
@@ -59,7 +67,6 @@ const updateContentFieldController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
 const deleteContentFieldController = async (req, res) => {
   try {
     const { delField } = req.body;
@@ -71,7 +78,6 @@ const deleteContentFieldController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
 const getContentEntriesController = async (req, res) => {
   try {
     const { Id } = req.params;
@@ -82,7 +88,6 @@ const getContentEntriesController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
 const addContentEntriesController = async (req, res) => {
   try {
     const { Id } = req.params;
@@ -94,7 +99,6 @@ const addContentEntriesController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
 const updateContentEntriesController = async (req, res) => {
   try {
     const { id } = req.params;
@@ -106,9 +110,6 @@ const updateContentEntriesController = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
-
-
 module.exports = {
   getContentsController,
   getContentController,
@@ -118,5 +119,6 @@ module.exports = {
   deleteContentFieldController,
   getContentEntriesController,
   addContentEntriesController,
-  updateContentEntriesController
+  updateContentEntriesController,
+  updateContentNameController
 };

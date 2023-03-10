@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
-const { getContentsController, getContentController, addContentController, addContentFieldController,
+const { getContentsController, getOneContentController, addContentController, addContentFieldController,
     deleteContentFieldController, getContentEntriesController, addContentEntriesController,
-    updateContentEntriesController, updateContentFieldController, updateContentNameController } = require('../controllers');
+    updateContentFieldController, updateContentNameController, deleteContentEntriesController } = require('../controllers');
 // const userAuth = require('../middleware/userAuth');
 const contentRouter = express.Router();
 // get all content-types
 contentRouter.get('/contents', getContentsController);
 // //get content-types by ID
-contentRouter.get('/content/:Id', getContentController);
+contentRouter.get('/content/:Id', getOneContentController);
 //post content-type
 contentRouter.post('/content', addContentController);
 //update content-type name
@@ -23,6 +23,7 @@ contentRouter.delete('/contents/:Id', deleteContentFieldController);
 contentRouter.get('/content/:Id/entries', getContentEntriesController);
 //add entries of specific content-type
 contentRouter.post('/content/:Id/entries', addContentEntriesController);
-//update entries of specific content-type
-// contentRouter.put('/content/:Id/entries/:id',updateContentEntriesController);
+// //delete entries of specific content-type by only content-type ID
+contentRouter.delete('/content/:Id/entries', deleteContentEntriesController);
+
 module.exports = contentRouter;

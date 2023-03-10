@@ -53,10 +53,6 @@ const addNewContentField = async (Id, newField) => {
             id: Id
         }
     });
-    // console.log(content.Fields[newField]);
-    // if(content.hasOwnProperty(newField)){
-    //     throw new Error('Field already exists');
-    // }
     content.Fields[newField] = '';
     content.changed('Fields', true);
     await content.save();
@@ -68,10 +64,6 @@ const updateContentField = async (Id, changeField) => {
             id: Id
         }
     });
-    // console.log(content.Fields[newField]);
-    // if(content.hasOwnProperty(newField)){
-    //     throw new Error('Field already exists');
-    // }
     delete content.Fields[changeField['old']];
     content.Fields[changeField['new']] = '';
     content.changed('Fields', true);
@@ -84,9 +76,6 @@ const deleteContentField = async (Id, newField) => {
             id: Id
         }
     });
-    // if(!content.Fields.hasOwnProperty(newField)){
-    //     throw new Error('Field does not exist');
-    // }
     delete content.Fields[newField];
     content.changed('Fields', true);
     await content.save();
@@ -119,6 +108,16 @@ const updateContentEntries = async (id, entry) => {
     });
     return newEntry[1];
 };
+const deleteContentEntries = async (id) => {
+    const newEntry = await db.ContentTypeEntries.destroy({
+        where: {
+            id
+        }
+    });
+    return newEntry;
+};
+
+
 module.exports = {
     addContent,
     getContents,
@@ -129,14 +128,6 @@ module.exports = {
     getContentEntries,
     addContentEntries,
     updateContentEntries,
-    updateContentName
+    updateContentName,
+    deleteContentEntries,
 };
-// const details = [];
-    //  await foundUser.cartDetails.reduce(async(products,productId)=>{
-    //     const product = await db.Product.findOne({
-    //         where:{
-    //             id:productId
-    //         }
-    //     })
-    //     return details.push(product.name);
-    // },details)
